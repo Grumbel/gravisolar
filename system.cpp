@@ -1,59 +1,66 @@
-//  Gravitation - A simple gravitation toy app
+//  Gravisolar
 //  Copyright (C) 2010 Ingo Ruhnke <grumbel@gmx.de>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-//  
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <stdlib.h>
-#include <sstream>
-#include <stdexcept>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-
 #include "system.hpp"
-#include "world.hpp"
-#include "game_session.hpp"
-#include "math/vector2f.hpp"
 
-int main(int argc, char** argv)
+#include <SDL_opengl.h>
+#include <assert.h>
+#include <stdexcept>
+#include <sstream>
+
+System::System() :
+  m_screen(0)
 {
-  try 
+  srand(time(0));
+
+  if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
-    int object_count = 100;
-    if (argc >= 2)
-    {
-      object_count = atoi(argv[1]);
-    }
-
-    System system;
-    system.create_window(800, 600, false);
-
-    World world;
-    world.add_random_objects(object_count);
-    
-    GameSession game_session(system, world);
-    game_session.run();
+    std::stringstream msg;
+    msg << "Couldn't initialize SDL: " << SDL_GetError();
+    throw std::runtime_error(msg.str());
   }
-  catch(const std::exception& err)
+  else
   {
-    std::cerr << "Exception: " << err.what() << std::endl;
+    atexit(SDL_Quit);
+    SDL_EnableUNICODE(1);
   }
+}
 
-  return 0;
+System::~System()
+{
+}
+
+void
+System::create_window(int width, int height, bool fullscreen)
+{
+  assert(!m_screen);
+
+  Uint32 flags = SDL_OPENGL;
+  if (fullscreen)
+    flags |= SDL_FULLSCREEN;
+
+  m_screen = SDL_SetVideoMode(width, height, 0, flags);
+
+  glOrtho(-width*10, width*10, height*10, -height*10, 1000.0, -1000.0);
+}
+
+void
+System::swap_buffers()
+{
+  SDL_GL_SwapBuffers();
 }
 
 /* EOF */
