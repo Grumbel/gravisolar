@@ -24,8 +24,8 @@ find_package(OpenGL REQUIRED)
 find_package(SDL REQUIRED)
 
 file(GLOB GRAVISOLAR_SOURCES_CXX
-  *.cpp
-  math/*.cpp)
+  src/*.cpp
+  src/math/*.cpp)
 
 add_executable(gravisolar ${GRAVISOLAR_SOURCES_CXX})
 target_link_libraries(gravisolar SDL::SDL OpenGL::OpenGL)
