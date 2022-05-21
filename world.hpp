@@ -24,7 +24,8 @@
 class World
 {
 private:
-  std::vector<Object> m_objects;
+  std::vector<Object> m_active_objects;
+  std::vector<Object> m_passive_objects;
 
 public:
   World();

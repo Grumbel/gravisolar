@@ -28,7 +28,16 @@ public:
   Vector2f force;
   bool remove;
 
+  Object() :
+    vel(),
+    pos(),
+    mass(),
+    force(),
+    remove()
+  {}
+
   static bool removable(const Object& obj) { return obj.remove; }
+  static bool removable_ptr(const Object* obj) { return obj->remove; }
 };
 
 #endif

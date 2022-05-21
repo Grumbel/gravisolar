@@ -21,7 +21,9 @@
 #include <algorithm>
 #include <math.h>
 
-World::World()
+World::World() :
+  m_active_objects(),
+  m_passive_objects()
 {
 }
 
@@ -31,15 +33,15 @@ World::update(float delta)
   for(int it = 0; it < 15; ++it)
   {
     // Clear all forces
-    for(std::vector<Object>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+    for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
     {
       i->force = Vector2f();
     }
 
     // Calculate all forces
-    for(std::vector<Object>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+    for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
     {
-      for(std::vector<Object>::iterator j = m_objects.begin(); j != m_objects.end(); ++j)
+      for(std::vector<Object>::iterator j = m_active_objects.begin(); j != m_active_objects.end(); ++j)
       {
         if (i != j && !i->remove && !j->remove)
         {
@@ -58,28 +60,23 @@ World::update(float delta)
           else // collision
           {
             i->vel  = (i->mass * i->vel + j->mass * j->vel) / (i->mass + j->mass);
-            i->pos  = (i->pos + j->pos)/2.0f;
+            i->pos  = (i->mass * i->pos + j->mass * j->pos) / (i->mass + j->mass);
             i->mass = i->mass + j->mass;
             i->force = Vector2f();
             j->remove = true;
           }
         }
       }
-
-      // remove stuff
-        
-      m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(), Object::removable),
-                      m_objects.end());
     }
+      // remove stuff       
+      m_active_objects.erase(std::remove_if(m_active_objects.begin(), m_active_objects.end(), Object::removable),
+                      m_active_objects.end());
     
     // Apply all forces
-    for(std::vector<Object>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+    for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
     {
       i->vel += (i->force / i->mass) * delta;
       i->pos += (i->vel) * delta;
-
-      //i->pos.x = fmodf(i->pos.x, 1280);
-      //i->pos.y = fmodf(i->pos.y, 1280);
     }
   }
 }
@@ -89,15 +86,21 @@ World::draw()
 {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  for(std::vector<Object>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
+  for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {
-    float d = std::max(sqrtf(i->mass)/5.0f, 1.5f);
+    float radius = std::max(sqrtf(i->mass)/5.0f, 1.5f);
 
-    glBegin(GL_LINE_LOOP);        
-    glVertex2f(i->pos.x + d, i->pos.y);
-    glVertex2f(i->pos.x, i->pos.y - d);
-    glVertex2f(i->pos.x - d, i->pos.y);
-    glVertex2f(i->pos.x, i->pos.y + d);
+    int segments = 8;
+    float n = static_cast<float>(segments) / 4.0f;
+
+    glBegin(GL_LINE_LOOP);
+    for(int j = 1; j <= segments; ++j)
+    {
+      float x = cosf(static_cast<float>(j) * (static_cast<float>(M_PI)/2.0f) / static_cast<float>(n)) * radius;
+      float y = sinf(static_cast<float>(j) * (static_cast<float>(M_PI)/2.0f) / static_cast<float>(n)) * radius;
+      
+      glVertex2f(i->pos.x + x, i->pos.y + y);
+    }
     glEnd();
   }
 }
@@ -108,13 +111,14 @@ World::add_random_objects(int object_count)
   for(int i = 0; i < object_count; ++i)
   {
     Object obj;
-    obj.pos.x = rand() % 10000 - 5000;
-    obj.pos.y = rand() % 10000 - 5000;
-    obj.vel.x = (rand() % 200 - 100);
-    obj.vel.y = (rand() % 200 - 100);
-    obj.mass  = (rand() % 50 + 50) * 100.0f;
+    obj.pos.x = static_cast<float>(rand() % 10000) - 5000.0f;
+    obj.pos.y = static_cast<float>(rand() % 10000) - 5000.0f;
+    obj.vel.x = static_cast<float>(rand() % 200 - 100);
+    obj.vel.y = static_cast<float>(rand() % 200 - 100);
+    obj.mass  = static_cast<float>(rand() % 50 + 50) * 100.0f;
     obj.remove = false;
-    m_objects.push_back(obj);
+
+    m_active_objects.push_back(obj);
   }
 }
 

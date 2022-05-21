@@ -30,6 +30,10 @@ public:
 
   void create_window(int width, int height, bool fullscreen);
   void swap_buffers();
+
+private:
+  System(const System&);
+  System& operator=(const System&);
 };
 
 #endif

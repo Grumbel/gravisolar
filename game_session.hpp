@@ -17,6 +17,8 @@
 #ifndef HEADER_GRAVISOLAR_GAME_SESSION_HPP
 #define HEADER_GRAVISOLAR_GAME_SESSION_HPP
 
+#include "math/vector2f.hpp"
+
 class World;
 class System;
 
@@ -26,6 +28,17 @@ private:
   System& m_system;
   World& m_world;
   bool m_quit;
+  bool m_pause;
+  bool m_single_step;
+  bool m_forward;
+
+  Vector2f m_camera_pos;
+  Vector2f m_camera_stick;
+
+  float m_camera_zoom;
+  float m_camera_zoom_stick;
+
+  Vector2f m_ship_stick;
 
 public:
   GameSession(System& system, World& world);
