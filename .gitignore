@@ -1,4 +1,3 @@
 *~
-.sconsign.dblite
-gravisolar
-*.o
+/build*/
+/result
