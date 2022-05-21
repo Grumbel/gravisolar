@@ -47,12 +47,12 @@ World::update(float delta)
         {
           float G = 15.0f;
           Vector2f dir = i->pos - j->pos;
-          float dist = dir.length();
+          float dist = glm::length(dir);
           float force = G * (i->mass * j->mass) / (dist*dist);
 
           if (force < 10000000.0f)
           {
-            dir.normalize();
+            dir = glm::normalize(dir);
           
             i->force += -dir * force;
             j->force +=  dir * force;

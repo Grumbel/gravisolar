@@ -20,6 +20,7 @@
 
 #include "vector2f.hpp"
 
+#if 0
 void
 Vector2f::normalize()
 {
@@ -76,5 +77,6 @@ Vector2f operator*(float s, const Vector2f& v)
 {
   return Vector2f(v.x * s, v.y * s);
 }
+#endif
 
 /* EOF */

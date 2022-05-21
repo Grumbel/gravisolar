@@ -19,7 +19,11 @@
 #define SUPERTUX_VECTOR_H
 
 #include <iosfwd>
+#include <glm/glm.hpp>
 
+using Vector2f = glm::vec2;
+
+#if 0
 /** Simple two dimensional vector. */
 class Vector2f
 {
@@ -137,6 +141,7 @@ public:
 
 std::ostream& operator<<(std::ostream& s, const Vector2f& v);
 Vector2f        operator*(float s, const Vector2f& v);
+#endif
 
 #endif
 

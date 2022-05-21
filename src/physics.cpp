@@ -71,12 +71,12 @@ Physics::update_calc_forces(float delta)
       if (*i != *j && !(*i)->remove && !(*j)->remove)
       {
         Vector2f dir = (*i)->pos - (*j)->pos;
-        float dist = dir.length();
+        float dist = glm::length(dir);
         float force = m_G * ((*i)->mass * (*j)->mass) / (dist*dist);
 
         if (force < 10000000.0f)
         {
-          dir.normalize();
+          dir = glm::normalize(dir);
           
           (*i)->force += -dir * force;
           (*j)->force +=  dir * force;
@@ -121,10 +121,10 @@ Physics::calc_force(const Vector2f& pos, float mass)
   for(std::vector<PhysicsObjectPtr>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {
     Vector2f dir = pos - (*i)->pos;
-    float dist = dir.length();
+    float dist = glm::length(dir);
     float force = m_G * (mass * (*i)->mass) / (dist*dist);   
 
-    dir.normalize();
+    dir = glm::normalize(dir);
           
     total_force += -dir * force;
   }
