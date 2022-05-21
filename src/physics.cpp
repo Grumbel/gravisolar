@@ -56,7 +56,7 @@ Physics::update_clear_forces(float delta)
 {
   for(std::vector<PhysicsObjectPtr>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
   {
-    (*i)->force = Vector2f();
+    (*i)->force = Vector2f(0.0f, 0.0f);
   }
 }
 
@@ -86,7 +86,7 @@ Physics::update_calc_forces(float delta)
           (*i)->vel  = ((*i)->mass * (*i)->vel + (*j)->mass * (*j)->vel) / ((*i)->mass + (*j)->mass);
           (*i)->pos  = ((*i)->mass * (*i)->pos + (*j)->mass * (*j)->pos) / ((*i)->mass + (*j)->mass);
           (*i)->mass = (*i)->mass + (*j)->mass;
-          (*i)->force = Vector2f();
+          (*i)->force = Vector2f(0.0f, 0.0f);
           (*j)->remove = true;
         }
       }
@@ -97,7 +97,7 @@ Physics::update_calc_forces(float delta)
 void
 Physics::update_apply_forces(float delta)
 {
-  Vector2f force;
+  Vector2f force(0.0f, 0.0f);
 
   for(std::vector<PhysicsObjectPtr>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {
@@ -116,7 +116,7 @@ Physics::update_removes(float delta)
 Vector2f
 Physics::calc_force(const Vector2f& pos, float mass)
 {
-  Vector2f total_force;
+  Vector2f total_force(0.0f, 0.0f);
 
   for(std::vector<PhysicsObjectPtr>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {

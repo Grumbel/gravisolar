@@ -35,7 +35,7 @@ World::update(float delta)
     // Clear all forces
     for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
     {
-      i->force = Vector2f();
+      i->force = Vector2f(0.0f, 0.0f);
     }
 
     // Calculate all forces
@@ -62,7 +62,7 @@ World::update(float delta)
             i->vel  = (i->mass * i->vel + j->mass * j->vel) / (i->mass + j->mass);
             i->pos  = (i->mass * i->pos + j->mass * j->pos) / (i->mass + j->mass);
             i->mass = i->mass + j->mass;
-            i->force = Vector2f();
+            i->force = Vector2f(0.0f, 0.0f);
             j->remove = true;
           }
         }

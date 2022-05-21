@@ -30,9 +30,6 @@ public:
   Vector2f(const Vector2f& other)
     : x(other.x), y(other.y)
   { }
-  Vector2f()
-    : x(0), y(0)
-  { }
 
   bool operator ==(const Vector2f& other) const
   {

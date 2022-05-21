@@ -29,11 +29,11 @@ GameSession::GameSession(System& system, World& world) :
   m_pause(false),
   m_single_step(false),
   m_forward(true),
-  m_camera_pos(),
-  m_camera_stick(0, 0),
+  m_camera_pos(0.0f, 0.0f),
+  m_camera_stick(0.0f, 0.0f),
   m_camera_zoom(1.0f),
   m_camera_zoom_stick(0.0f),
-  m_ship_stick()
+  m_ship_stick(0.0f, 0.0f)
 {
 }
 
@@ -102,7 +102,7 @@ GameSession::process_input()
               break;
 
             case SDLK_KP5:
-              m_camera_pos  = Vector2f();
+              m_camera_pos  = Vector2f(0.0f, 0.0f);
               m_camera_zoom = 1.0f;
               break;
 
@@ -130,7 +130,7 @@ GameSession::process_input()
   
   Uint8* keystate = SDL_GetKeyState(NULL);
 
-  m_camera_stick = Vector2f();
+  m_camera_stick = Vector2f(0.0f, 0.0f);
 
   if (keystate[SDLK_KP4] && !keystate[SDLK_KP6])
     m_camera_stick.x = 1.0f;
@@ -152,7 +152,7 @@ GameSession::process_input()
     m_camera_zoom_stick = 1.0f;
 
 
-  m_ship_stick = Vector2f();
+  m_ship_stick = Vector2f(0.0f, 0.0f);
   if (keystate[SDLK_LEFT] && !keystate[SDLK_RIGHT])
     m_ship_stick.x = 1.0f;
 

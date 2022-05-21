@@ -29,11 +29,11 @@ public:
   bool remove;
 
   Object() :
-    vel(),
-    pos(),
-    mass(),
-    force(),
-    remove()
+    vel(0.0f, 0.0f),
+    pos(0.0f, 0.0f),
+    mass(0.0f),
+    force(0.0f, 0.0f),
+    remove(false)
   {}
 
   static bool removable(const Object& obj) { return obj.remove; }
