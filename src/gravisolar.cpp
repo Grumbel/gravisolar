@@ -24,10 +24,11 @@
 #include <vector>
 #include <math.h>
 
+#include <glm/vec2.hpp>
+
 #include "system.hpp"
 #include "world.hpp"
 #include "game_session.hpp"
-#include "math/vector2f.hpp"
 
 int main(int argc, char** argv)
 {

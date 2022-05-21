@@ -21,6 +21,8 @@
 #include <algorithm>
 #include <math.h>
 
+#include <glm/glm.hpp>
+
 World::World() :
   m_active_objects(),
   m_passive_objects()
@@ -35,7 +37,7 @@ World::update(float delta)
     // Clear all forces
     for(std::vector<Object>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
     {
-      i->force = Vector2f(0.0f, 0.0f);
+      i->force = glm::vec2(0.0f, 0.0f);
     }
 
     // Calculate all forces
@@ -46,7 +48,7 @@ World::update(float delta)
         if (i != j && !i->remove && !j->remove)
         {
           float G = 15.0f;
-          Vector2f dir = i->pos - j->pos;
+          glm::vec2 dir = i->pos - j->pos;
           float dist = glm::length(dir);
           float force = G * (i->mass * j->mass) / (dist*dist);
 
@@ -62,7 +64,7 @@ World::update(float delta)
             i->vel  = (i->mass * i->vel + j->mass * j->vel) / (i->mass + j->mass);
             i->pos  = (i->mass * i->pos + j->mass * j->pos) / (i->mass + j->mass);
             i->mass = i->mass + j->mass;
-            i->force = Vector2f(0.0f, 0.0f);
+            i->force = glm::vec2(0.0f, 0.0f);
             j->remove = true;
           }
         }

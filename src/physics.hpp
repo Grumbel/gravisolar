@@ -19,8 +19,9 @@
 
 #include <vector>
 
+#include <glm/vec2.hpp>
+
 #include "object.hpp"
-#include "math/vector2f.hpp"
 
 typedef Object PhysicsObject;
 typedef PhysicsObject* PhysicsObjectPtr;
@@ -35,14 +36,14 @@ private:
 public:
   Physics();
 
-  PhysicsObjectPtr create_object(const Vector2f& pos,
-                                 const Vector2f& vel,
+  PhysicsObjectPtr create_object(const glm::vec2& pos,
+                                 const glm::vec2& vel,
                                  float mass,
                                  bool active);
   void remove_object(PhysicsObjectPtr obj);
 
   void update(float delta);
-  Vector2f calc_force(const Vector2f& pos, float mass);
+  glm::vec2 calc_force(const glm::vec2& pos, float mass);
 
 private:
   void update_clear_forces(float delta);

@@ -18,6 +18,8 @@
 
 #include <algorithm>
 
+#include <glm/glm.hpp>
+
 Physics::Physics() :
   m_objects(),
   m_active_objects(),
@@ -26,8 +28,8 @@ Physics::Physics() :
 }
 
 PhysicsObjectPtr
-Physics::create_object(const Vector2f& pos,
-                       const Vector2f& vel,
+Physics::create_object(const glm::vec2& pos,
+                       const glm::vec2& vel,
                        float mass,
                        bool active)
 {
@@ -56,7 +58,7 @@ Physics::update_clear_forces(float delta)
 {
   for(std::vector<PhysicsObjectPtr>::iterator i = m_objects.begin(); i != m_objects.end(); ++i)
   {
-    (*i)->force = Vector2f(0.0f, 0.0f);
+    (*i)->force = glm::vec2(0.0f, 0.0f);
   }
 }
 
@@ -70,7 +72,7 @@ Physics::update_calc_forces(float delta)
     {
       if (*i != *j && !(*i)->remove && !(*j)->remove)
       {
-        Vector2f dir = (*i)->pos - (*j)->pos;
+        glm::vec2 dir = (*i)->pos - (*j)->pos;
         float dist = glm::length(dir);
         float force = m_G * ((*i)->mass * (*j)->mass) / (dist*dist);
 
@@ -86,7 +88,7 @@ Physics::update_calc_forces(float delta)
           (*i)->vel  = ((*i)->mass * (*i)->vel + (*j)->mass * (*j)->vel) / ((*i)->mass + (*j)->mass);
           (*i)->pos  = ((*i)->mass * (*i)->pos + (*j)->mass * (*j)->pos) / ((*i)->mass + (*j)->mass);
           (*i)->mass = (*i)->mass + (*j)->mass;
-          (*i)->force = Vector2f(0.0f, 0.0f);
+          (*i)->force = glm::vec2(0.0f, 0.0f);
           (*j)->remove = true;
         }
       }
@@ -97,7 +99,7 @@ Physics::update_calc_forces(float delta)
 void
 Physics::update_apply_forces(float delta)
 {
-  Vector2f force(0.0f, 0.0f);
+  glm::vec2 force(0.0f, 0.0f);
 
   for(std::vector<PhysicsObjectPtr>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {
@@ -113,14 +115,14 @@ Physics::update_removes(float delta)
                          m_active_objects.end());
 }
 
-Vector2f
-Physics::calc_force(const Vector2f& pos, float mass)
+glm::vec2
+Physics::calc_force(const glm::vec2& pos, float mass)
 {
-  Vector2f total_force(0.0f, 0.0f);
+  glm::vec2 total_force(0.0f, 0.0f);
 
   for(std::vector<PhysicsObjectPtr>::iterator i = m_active_objects.begin(); i != m_active_objects.end(); ++i)
   {
-    Vector2f dir = pos - (*i)->pos;
+    glm::vec2 dir = pos - (*i)->pos;
     float dist = glm::length(dir);
     float force = m_G * (mass * (*i)->mass) / (dist*dist);   
 

@@ -17,15 +17,15 @@
 #ifndef HEADER_GRAVISOLAR__HOME_INGO_PROJECTS_GRAVISOLAR_GRAVISOLAR_GIT_OBJECT_HPP
 #define HEADER_GRAVISOLAR__HOME_INGO_PROJECTS_GRAVISOLAR_GRAVISOLAR_GIT_OBJECT_HPP
 
-#include "math/vector2f.hpp"
+#include <glm/vec2.hpp>
 
 class Object
 {
 public:
-  Vector2f vel;
-  Vector2f pos;
+  glm::vec2 vel;
+  glm::vec2 pos;
   float    mass;
-  Vector2f force;
+  glm::vec2 force;
   bool remove;
 
   Object() :
