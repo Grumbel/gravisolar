@@ -29,12 +29,16 @@
         gravisolar_version = if !gravisolar_has_version
                            then ("0.1.0-${nixpkgs.lib.substring 0 8 self.lastModifiedDate}-${self.shortRev or "dirty"}")
                            else (builtins.substring 1 ((builtins.stringLength version_file) - 2) version_file);
-       in rec {
-         packages = flake-utils.lib.flattenTree rec {
+       in {
+         packages = rec {
+           default = gravisolar;
+
            gravisolar = pkgs.stdenv.mkDerivation rec {
              pname = "gravisolar";
              version = gravisolar_version;
+
              src = nixpkgs.lib.cleanSource ./.;
+
              postPatch = ''
                 if ${if gravisolar_has_version then "false" else "true"}; then
                   echo "${version}" > VERSION
@@ -42,38 +46,44 @@
                 substituteInPlace CMakeLists.txt \
                   --replace "appstream-util" "appstream-util --nonet"
              '';
+
              cmakeFlags = [
                "-DWARNINGS=ON"
                "-DWERROR=ON"
                "-DBUILD_TESTS=ON"
              ];
+
              doCheck = true;
+
              postFixup = ''
                wrapProgram $out/bin/gravisolar \
                   --prefix LIBGL_DRIVERS_PATH ":" "${pkgs.mesa.drivers}/lib/dri" \
                   --prefix LD_LIBRARY_PATH ":" "${pkgs.mesa.drivers}/lib"
              '';
+
              nativeBuildInputs = with pkgs; [
                cmake
                makeWrapper
                pkgconfig
              ];
+
              checkInputs = with pkgs; [
                appstream-glib
              ];
+
              buildInputs = with pkgs; [
-               fmt
+               fmt_8
                glm
                libGL
                libGLU
                SDL
              ] ++ [
-               geomcpp.defaultPackage.${system}
-               logmich.defaultPackage.${system}
-               tinycmmc.defaultPackage.${system}
+               geomcpp.packages.${system}.default
+               logmich.packages.${system}.default
+               tinycmmc.packages.${system}.default
              ];
            };
         };
-        defaultPackage = packages.gravisolar;
-      });
+       }
+    );
 }
