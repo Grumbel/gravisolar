@@ -41,15 +41,8 @@
 
              doCheck = true;
 
-             postFixup = ''
-               wrapProgram $out/bin/gravisolar \
-                  --prefix LIBGL_DRIVERS_PATH ":" "${pkgs.mesa.drivers}/lib/dri" \
-                  --prefix LD_LIBRARY_PATH ":" "${pkgs.mesa.drivers}/lib"
-             '';
-
              nativeBuildInputs = with pkgs; [
                cmake
-               makeWrapper
                pkgconfig
              ];
 
