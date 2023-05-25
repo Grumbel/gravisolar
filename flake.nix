@@ -2,25 +2,11 @@
   description = "Planetary Toy";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
-
-    tinycmmc.url = "github:grumbel/tinycmmc";
-    tinycmmc.inputs.nixpkgs.follows = "nixpkgs";
-    tinycmmc.inputs.flake-utils.follows = "flake-utils";
-
-    logmich.url = "github:logmich/logmich";
-    logmich.inputs.nixpkgs.follows = "nixpkgs";
-    logmich.inputs.flake-utils.follows = "flake-utils";
-    logmich.inputs.tinycmmc.follows = "tinycmmc";
-
-    geomcpp.url = "github:grumbel/geomcpp";
-    geomcpp.inputs.nixpkgs.follows = "nixpkgs";
-    geomcpp.inputs.flake-utils.follows = "flake-utils";
-    geomcpp.inputs.tinycmmc.follows = "tinycmmc";
   };
 
-  outputs = { self, nixpkgs, flake-utils, tinycmmc, logmich, geomcpp }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -77,10 +63,6 @@
                libGL
                libGLU
                SDL
-             ] ++ [
-               geomcpp.packages.${system}.default
-               logmich.packages.${system}.default
-               tinycmmc.packages.${system}.default
              ];
            };
         };

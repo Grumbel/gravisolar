@@ -1,78 +1,35 @@
 {
   "nodes": {
     "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
       "locked": {
-        "lastModified": 1659877975,
-        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "lastModified": 1681202837,
+        "narHash": "sha256-H+Rh19JDwRtpVPAWp64F+rlEtxUWBAQW28eAi3SRSzg=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "rev": "cfacdce06f30d2b68473a46042957675eebb3401",
         "type": "github"
       },
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "geomcpp": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "tinycmmc": [
-          "tinycmmc"
-        ]
-      },
-      "locked": {
-        "lastModified": 1661006109,
-        "narHash": "sha256-fa7JEZr1Z+tChetnien/TNpuKKL/UEyRaJEPFAG3tOc=",
-        "owner": "grumbel",
-        "repo": "geomcpp",
-        "rev": "c2ffae5984f9eecf11f7f1e8a5611f988ade1552",
-        "type": "github"
-      },
-      "original": {
-        "owner": "grumbel",
-        "repo": "geomcpp",
-        "type": "github"
-      }
-    },
-    "logmich": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "tinycmmc": [
-          "tinycmmc"
-        ]
-      },
-      "locked": {
-        "lastModified": 1661006039,
-        "narHash": "sha256-div01/p21R2oDfOea8YL3+CtQ1xxg69Doe29Ru5+avw=",
-        "owner": "logmich",
-        "repo": "logmich",
-        "rev": "33a5e05e9fb4cea1fc92346ccfa0ab739d906f02",
-        "type": "github"
-      },
-      "original": {
-        "owner": "logmich",
-        "repo": "logmich",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1663587673,
-        "narHash": "sha256-4C4R/PV8+HjkgVd1Db8AuvHwhQp5vllVqOQEl6YDh3o=",
+        "lastModified": 1684922889,
+        "narHash": "sha256-l0WZAmln8959O7RdYUJ3gnAIM9OPKFLKHKGX4q+Blrk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "20dc478985d6545df53f0153f4af125eb014083d",
+        "rev": "04aaf8511678a0d0f347fdf1e8072fe01e4a509e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.05",
+        "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -80,32 +37,21 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "geomcpp": "geomcpp",
-        "logmich": "logmich",
-        "nixpkgs": "nixpkgs",
-        "tinycmmc": "tinycmmc"
+        "nixpkgs": "nixpkgs"
       }
     },
-    "tinycmmc": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "systems": {
       "locked": {
-        "lastModified": 1660915337,
-        "narHash": "sha256-RUvBcVlsF0jleNeDGP2TtTYVozsx+7lJeOlQJ9vuYrk=",
-        "owner": "grumbel",
-        "repo": "tinycmmc",
-        "rev": "25af158259bc772a5393c6200c4ebfd0ec4e28d0",
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
         "type": "github"
       },
       "original": {
-        "owner": "grumbel",
-        "repo": "tinycmmc",
+        "owner": "nix-systems",
+        "repo": "default",
         "type": "github"
       }
     }
