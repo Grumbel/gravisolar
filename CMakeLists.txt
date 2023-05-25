@@ -24,11 +24,12 @@ find_package(OpenGL REQUIRED)
 find_package(SDL REQUIRED)
 
 file(GLOB GRAVISOLAR_SOURCES_CXX
-  src/*.cpp
-  src/math/*.cpp)
+  src/*.cpp)
 
 add_executable(gravisolar ${GRAVISOLAR_SOURCES_CXX})
-target_link_libraries(gravisolar SDL::SDL OpenGL::OpenGL)
+target_link_libraries(gravisolar PRIVATE
+  SDL::SDL
+  OpenGL::OpenGL)
 
 install(TARGETS gravisolar RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
