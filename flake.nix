@@ -2,7 +2,7 @@
   description = "Planetary Toy";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -43,7 +43,7 @@
 
              nativeBuildInputs = with pkgs; [
                cmake
-               pkgconfig
+               pkg-config
              ];
 
              checkInputs = with pkgs; [
@@ -51,7 +51,7 @@
              ];
 
              buildInputs = with pkgs; [
-               fmt_8
+               fmt
                glm
                libGL
                libGLU
